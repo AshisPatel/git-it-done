@@ -22,12 +22,22 @@
   <main class="flex-row justify-space-between">
     <!-- Column on left-side for the search repo form -->
     <div class="col-12 col-md-4">
+      <!-- Card for User Search -->
       <div class="card">
         <h3 class="card-header text-uppercase">Search By User</h3>
         <form id="user-form" class="card-body">
           <label class="form-label" for="username">Username</label>
           <input name="username" id="username" type="text" autofocus="true" class="form-input" />
           <button type="submit" class="btn">Get User</button>
+        </form>
+      </div>
+      <!-- Card for Search By Topic (language) -->
+      <div class="card" id="language-buttons">
+        <h3 class="card-header text-uppercase">Search By Topic</h3>
+        <form id="topic-form" class="card-body">
+          <button type="button" class="btn" data-langauge="JavaScript">JavaScript</button>
+          <button type="button" class="btn" data-langauge="HTML">HTML</button>
+          <button type="button" class="btn" data-langauge="CSS">CSS</button>
         </form>
       </div>
     </div>
