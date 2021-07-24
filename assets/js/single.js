@@ -1,4 +1,14 @@
 const issueContainerEl = document.querySelector("#issues-container"); 
+const limitWarningEl = document.querySelector("#limit-warning"); 
+const repoNameEl = document.querySelector("#repo-name"); 
+
+const getRepoName = function() {
+    const queryString = document.location.search;
+    const repoName = queryString.split("=")[1]; 
+    repoNameEl.textContent = repoName; 
+    getRepoIssues(repoName); 
+}
+
 
 const getRepoIssues = function(repo) {
     const apiUrl = "https://api.github.com/repos/" + repo + "/issues?direction=asc"; 
@@ -7,6 +17,10 @@ const getRepoIssues = function(repo) {
             response.json().then(function(data){
                 displayIssues(data);  
             })
+            // Check if API has paginated issues (link for more than 30 issues)
+            if(response.headers.get("Link")) {
+                displayWarning(repo); 
+            }
         }
         else {
             alert("There was a problem with your request!"); 
@@ -47,4 +61,16 @@ const displayIssues = function(issues) {
     }   
 }
 
-getRepoIssues("ashispatel/taskinator"); 
+const displayWarning = function(repo) {
+    // Add text to warning container
+    limitWarningEl.textContent = "To see more than the oldest 30 issues, visit: ";
+    const linkEl = document.createElement("a");
+    linkEl.textContent = "See All Issues on Github.com";
+    linkEl.setAttribute("href", "https://github.com/" + repo + "/issues"); 
+    linkEl.setAttribute("target", "_blank"); 
+    
+    // Append to limit warning continaer
+    limitWarningEl.appendChild(linkEl); 
+};
+
+getRepoName(); 

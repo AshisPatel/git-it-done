@@ -61,9 +61,13 @@ const displayRepos = function(repos, searchTerm) {
         // Format Repo name
         //const repoName = repos[i].owner.login + "/" + repos[i].name;
         const repoName = repos[i].full_name; 
+        // Format query string to grab repo name
+        //const repo = repoName; 
         // Create a container for each repo
-        const repoEl = document.createElement("div");
+        const repoEl = document.createElement("a");
         repoEl.classList = "list-item flex-row justify-space-between align-center";
+        // Add link to single.js
+        repoEl.setAttribute("href", "./single-repo.html?repo="+repoName); 
         // Create a span element to hold repository name
         const titleEl = document.createElement("span");
         titleEl.textContent = repoName;
