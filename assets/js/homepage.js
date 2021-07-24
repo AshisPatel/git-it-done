@@ -37,7 +37,7 @@ const getUserRepos = function(user) {
         }
 
     })
-    // the .catch is if the fetch request is not able to connect to the GitHub API
+    // the .catch is if the fetch request / promise is not fulfilled 
     .catch(function(error) {
         // This is being added to the end of the then(....)
         alert("Unable to connect to Github"); 
