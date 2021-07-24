@@ -26,15 +26,32 @@ const getUserRepos = function(user) {
     
     // Make a request to the url to return the repos for the user
     fetch(apiUrl).then(function(response){
-        response.json().then(function(data){
-            displayRepos(data,user); 
-        });
+        // Checks to see if user exists (as in request status code is in the 200s)
+        if (response.ok) {
+            response.json().then(function(data){
+                displayRepos(data,user); 
+            });
+        }
+        else {
+            alert("Error: GitHub User Not Found"); 
+        }
+
+    })
+    // the .catch is if the fetch request is not able to connect to the GitHub API
+    .catch(function(error) {
+        // This is being added to the end of the then(....)
+        alert("Unable to connect to Github"); 
     });
 };
 
 // Function to get right keys from the fetched data and display it in a list using 'repos -> the data from the fetch' and 'searchTerm' which is the searched username
 const displayRepos = function(repos, searchTerm) {
     console.log(repos); 
+    // Check if api returned any repos, or if user has no repos
+    if (repos.length === 0) {
+        repoContainerEl.textContent = "No repositories found.";
+        return; 
+    }
     // Remove old search content
     repoContainerEl.textContent = "";
     repoSearchTermEl.textContent = searchTerm;
